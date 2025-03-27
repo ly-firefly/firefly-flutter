@@ -2,6 +2,7 @@ import 'package:firefly_example/configuration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firefly/ff_splash.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SplashRouter extends StatefulWidget {
@@ -13,9 +14,17 @@ class SplashRouter extends StatefulWidget {
 }
 
 class _SplashRouterState extends State<SplashRouter> {
+  final TextEditingController _controllerSlotId = TextEditingController();
+  final TextEditingController _controllerPriceFloor = TextEditingController();
+
 
   _loadSplash() async {
-    YHCSplashManager.loadSplash(adSlotId: Configuration.splashAdSlotId, priceFloor: 1).then((
+    int priceFloorH = _getPriceFloor();
+    var slotId = _getSlotId();
+    if(slotId == null || slotId.isEmpty) {
+      slotId = Configuration.splashAdSlotId;
+    }
+    YHCSplashManager.loadSplash(adSlotId: slotId, priceFloor: priceFloorH).then((
         value) {
       print(value ? "获取开屏物料成功" : "获取开屏物料失败");
       Fluttertoast.showToast(
@@ -94,6 +103,22 @@ class _SplashRouterState extends State<SplashRouter> {
     YHCSplashManager.loss(price: price, map: map);
   }
 
+  String _getSlotId() {
+    String inputText = _controllerSlotId.text;
+    // 你也可以弹个 Toast 或 Dialog
+    return inputText;
+  }
+
+  int _getPriceFloor() {
+    String inputText = _controllerPriceFloor.text;
+    // 你也可以弹个 Toast 或 Dialog
+    int priceFloor = 0;
+    if(inputText.isNotEmpty) {
+      priceFloor = int.parse(inputText);
+    }
+    return priceFloor;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,65 +135,87 @@ class _SplashRouterState extends State<SplashRouter> {
         color: Colors.white,
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // 垂直居中
             crossAxisAlignment: CrossAxisAlignment.center, // 水平居中
             children: [
+              TextField(
+                controller: _controllerSlotId,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                    labelText: Configuration.appId,
+                    border: OutlineInputBorder(),
+                    hintText: "输入代码位"
+                ),
+              ),
+              SizedBox(height: 5),
+              TextField(
+                controller: _controllerPriceFloor,
+                enableInteractiveSelection: true,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "输入底价"
+                ),
+              ),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _loadSplash();
                 },
                 child: Text('获取开屏物料'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _isAdReady();
                 },
                 child: Text('物料是否准备完成'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _showSplash();
                 },
                 child: Text('展示广告'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _getAdSlotAd();
                 },
                 child: Text('获取代码位'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _getEcpm();
                 },
                 child: Text('获取ecpm'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _getMaterialType();
                 },
                 child: Text('获取物料类型'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _win();
                 },
                 child: Text('竞胜回传'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _loss();
                 },
                 child: Text('竞败回传'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: () {
                   _destroy();

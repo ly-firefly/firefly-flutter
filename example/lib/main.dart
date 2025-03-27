@@ -20,6 +20,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isInit = false;
+  // 创建控制器
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -28,8 +30,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   _initFireFlySDK() async {
+    var appId = _getInputText();
     await FFInitManger.initFireFlySDK(
-            appId: Configuration.appId,
+            appId: (appId == null || appId.isEmpty) ? Configuration.appId : appId,
             enableDebug: true,
             appName: "firefly flutter demo",
             isCanUsePhoneState: true,
@@ -78,6 +81,12 @@ class _MyAppState extends State<MyApp> {
     ListenerManager.splashListen(context);
   }
 
+  String _getInputText() {
+    String inputText = _controller.text;
+    // 你也可以弹个 Toast 或 Dialog
+    return inputText;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -89,9 +98,18 @@ class _MyAppState extends State<MyApp> {
         body: Builder(
           builder: (ctx) => Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // 垂直居中
               crossAxisAlignment: CrossAxisAlignment.center, // 水平居中
               children: [
+                TextField(
+                  controller: _controller, // 绑定控制器
+                  enableInteractiveSelection: true, // 默认为 true，启用复制粘贴等
+                  decoration: InputDecoration(
+                    labelText: Configuration.appId,
+                    border: OutlineInputBorder(),
+                    hintText: "输入AppId"
+                  ),
+                ),
+                SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     _initFireFlySDK();
