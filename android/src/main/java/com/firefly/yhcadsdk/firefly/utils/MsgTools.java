@@ -1,41 +1,180 @@
-package com.anythink.flutter.utils;
+package com.firefly.yhcadsdk.firefly.utils;
 
-import android.util.Log;
+
+import java.util.IllegalFormatException;
+
+import androidx.annotation.Nullable;
 
 
 public class MsgTools {
-    public static final String TAG = "ATFlutterBridge";
-    public static boolean isDebug = true;
-
-    public static void printMsg(String msg) {
-        if (isDebug) {
-            logLongMsg(TAG, msg, false, null);
-        }
-    }
+    public static final String TAG = "YHCFlutterBridge";
+    public static boolean showLog = true;
 
     public static void setLogDebug(boolean debug) {
-        isDebug = debug;
+        showLog = debug;
     }
 
-    public static void logLongMsg(String TAG, String message, boolean logError, Throwable throwable) {
-        //因为String的length是字符数量不是字节数量所以为了防止中文字符过多，
-        //  把4*1024的MAX字节打印长度改为2001字符数
-        int max_str_length = 2001 - TAG.length();
-        //大于4000时
-        while (message.length() > max_str_length) {
-            if (logError) {
-                Log.e(TAG, message.substring(0, max_str_length), throwable);
-            } else {
-                Log.i(TAG, message.substring(0, max_str_length));
-            }
 
-            message = message.substring(max_str_length);
+    /**
+     * 将verbose级别日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args the args
+     */
+    public static void v(String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.v(TAG, format(msg, args));
         }
-        //剩余部分
-        if (logError) {
-            Log.e(TAG, message, throwable);
-        } else {
-            Log.i(TAG, message);
+    }
+
+    /**
+     * 将debug级别日志写入日志文件
+     *
+     * @param tag Tag
+     * @param msg msg
+     */
+    public static void v(String tag, String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.v(tag, format(msg, args));
         }
+    }
+
+
+    /**
+     * 将debug级别日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args args
+     */
+    public static void d(String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.d(TAG, format(msg, args));
+        }
+    }
+
+    /**
+     * 将debug级别日志写入日志文件
+     *
+     * @param tag tag
+     * @param msg msg
+     */
+    public static void d(String tag, String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.d(tag, format(msg, args));
+        }
+    }
+
+
+    /**
+     * 将info级别日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args args
+     */
+    public static void i(String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.i(TAG, format(msg, args));
+        }
+    }
+
+    /**
+     * 将info级别日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args args
+     */
+    public static void i(String tag, String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.i(tag, format(msg, args));
+        }
+    }
+
+
+    /**
+     * 将warnning级别日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args args
+     */
+    public static void w(String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.i(TAG, format(msg, args));
+        }
+    }
+
+    /**
+     * 将warnning级别日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args args
+     */
+    public static void w(String tag, String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.w(tag, format(msg, args));
+        }
+    }
+
+    /**
+     * 打印warn级别的日志，只打印！！！
+     *
+     * @param throwable 异常信息
+     * @param msg       支持 %s 格式的占位符，注意不支持%d, %f等情况。
+     * @param args      需要填充格式化占位符的数据
+     */
+    public static void w(Throwable throwable, String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.w(TAG, format(msg, args), throwable);
+        }
+    }
+
+    /**
+     * 打印error级别的日志，只打印！！！
+     *
+     * @param throwable 异常信息
+     * @param msg       支持 %s 格式的占位符，注意不支持%d, %f等情况。
+     * @param args      需要填充格式化占位符的数据
+     */
+    public static void e(Throwable throwable, String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.e(TAG, format(msg, args), throwable);
+        }
+    }
+
+    /**
+     * 将error级别的日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args args
+     */
+    public static void e(String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.e(TAG, format(msg, args));
+        }
+    }
+
+    /**
+     * 将error级别的日志写入日志文件
+     *
+     * @param msg  msg
+     * @param args args
+     */
+    public static void e(String tag, String msg, Object... args) {
+        if (showLog) {
+            android.util.Log.e(tag, format(msg, args));
+        }
+    }
+
+    private static String format(@Nullable String str, Object... args) {
+        String text = str;
+        if (text != null) {
+            if (args != null && args.length > 0) {
+                try {
+                    text = String.format(str, args);
+                } catch (IllegalFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return text;
     }
 }

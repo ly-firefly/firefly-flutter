@@ -1,56 +1,47 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 
-class PlatformNativeWidget extends StatefulWidget {
+class PlatformSplashWidget extends StatefulWidget {
 
-  PlatformNativeWidget(this.placementID,this.extraMap,{this.sceneID, this.isAdaptiveHeight=false});
-
-  final String placementID;
-
-  final Map extraMap;
-
-  final String? sceneID;
-
-  final bool? isAdaptiveHeight;
+  PlatformSplashWidget({Key? key}) : super(key: key);
 
   @override
-  _PlatformNativeWidgetState createState() => _PlatformNativeWidgetState();
+  _PlatformSplashWidgetState createState() => _PlatformSplashWidgetState();
 }
 
-class _PlatformNativeWidgetState extends State<PlatformNativeWidget> {
+class _PlatformSplashWidgetState extends State<PlatformSplashWidget> {
   @override
   Widget build(BuildContext context) {
-
-    if (defaultTargetPlatform == TargetPlatform.android) {
-
-      return AndroidView(
-        key: UniqueKey(),
-        viewType: 'at_native_platform_view',
-        creationParams: <String, dynamic>{
-          "placementID": widget.placementID,
-          "sceneID": widget.sceneID,
-          "extraMap" : widget.extraMap,
-          "isAdaptiveHeight" : widget.isAdaptiveHeight,
+    if(defaultTargetPlatform == TargetPlatform.android) {
+      return PlatformViewLink(
+        viewType: 'ff_splash_platform_view',
+        surfaceFactory: (
+            BuildContext context,
+            PlatformViewController controller,
+            ) {
+          return AndroidViewSurface(
+            controller: controller as AndroidViewController,
+            gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+            hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+          );
         },
-        creationParamsCodec: const StandardMessageCodec(),
-      );
-    }
-    else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return UiKitView(
-        key: UniqueKey(),
-        viewType: "at_native_platform_view",
-        creationParams: <String, dynamic>{
-          "placementID": widget.placementID,
-          "sceneID": widget.sceneID,
-          "extraMap" : widget.extraMap,
-          "isAdaptiveHeight" : widget.isAdaptiveHeight,
+        onCreatePlatformView: (PlatformViewCreationParams params) {
+          return PlatformViewsService.initSurfaceAndroidView(
+            id: params.id,
+            viewType: 'ff_splash_platform_view',
+            layoutDirection: TextDirection.ltr,
+            creationParams: {},
+            creationParamsCodec: const StandardMessageCodec(),
+          )
+            ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+            ..create();
         },
-        creationParamsCodec: const StandardMessageCodec(),
       );
-    }
-    else {
+    } else {
       return Text("Unsupported platform");
     }
   }

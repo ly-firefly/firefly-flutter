@@ -1,4 +1,4 @@
-package com.anythink.flutter.utils;
+package com.firefly.yhcadsdk.firefly.utils;
 
 import android.app.Activity;
 import android.content.Context;
