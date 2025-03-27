@@ -18,6 +18,6 @@ public class YHCSplashViewFactory extends PlatformViewFactory {
 
     @Override
     public PlatformView create(Context context, int viewId, Object args) {
-        return new YHCAndroidSplashView();
+        return new YHCAndroidSplashView(context);
     }
 }

@@ -64,6 +64,7 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
                             result.success(false);
                         }
                     });
+                    MsgTools.i(String.format("adSlotId = %s, priceFloor = %d", adSlotId, priceFloor));
                 } else {
                     result.success(false);
                 }
@@ -119,7 +120,7 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
                     long price = ((Number) methodCall.argument(Const.Splash.PRICE)).longValue();
                     Map<String, Object> map = methodCall.argument(Const.Splash.EXTRA);
                     mYHCSplashAd.win(price, map);
-                    MsgTools.i("splashWin");
+                    MsgTools.i("splashWin = "+ map(map));
                 }
                 break;
             case "splashLoss":
@@ -127,7 +128,7 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
                     long price = ((Number) methodCall.argument(Const.Splash.PRICE)).longValue();
                     Map<String, Object> map = methodCall.argument(Const.Splash.EXTRA);
                     mYHCSplashAd.loss(price, map);
-                    MsgTools.i("splashLoss");
+                    MsgTools.i("splashLoss = " + map(map));
                 }
                 break;
         }
@@ -149,7 +150,7 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
             return mYHCSplashAd.getSplashView(new YHCSplashAd.SplashAdInteractionListener() {
                 @Override
                 public void onAdShow() {
-                    MsgTools.i("SplashView");
+                    MsgTools.i("onAdShow");
                     YHCFlutterEventManager.getInstance().sendCallbackMsgToFlutter(Const.CallbackMethodCall.SPLASH_CALL, Const.SplashCallback.ON_AD_SHOW, null, 0);
                 }
 
@@ -182,5 +183,18 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
             });
         }
         return null;
+    }
+
+    private String map(Map<String, Object> map) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        if (map != null && !map.isEmpty()) {
+            for (String key : map.keySet()) {
+                sb.append("\"").append(key).append("\":").append("\"").append(map.get(key)).append("\"").append(",");
+            }
+            sb = sb.deleteCharAt(sb.length() - 1);
+        }
+        sb.append("}");
+        return sb.toString();
     }
 }
