@@ -1,7 +1,7 @@
 
 import 'package:firefly/ff_client_bidding.dart';
 import 'package:firefly/firefly.dart';
-import 'package:firefly/tt_base_ad.dart';
+import 'package:firefly/ff_base_ad.dart';
 
 final YHCSplashManager = YHCSplash();
 

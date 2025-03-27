@@ -1,10 +1,10 @@
-package com.firefly.yhcadsdk.firefly.init;
+package com.firefly.yhcadsdk.flutter.init;
 
 
-import com.firefly.yhcadsdk.firefly.HandleAnyFireflyMethod;
-import com.firefly.yhcadsdk.firefly.utils.Const;
-import com.firefly.yhcadsdk.firefly.utils.FlutterPluginUtil;
-import com.firefly.yhcadsdk.firefly.utils.MsgTools;
+import com.firefly.yhcadsdk.flutter.HandleAnyFireflyMethod;
+import com.firefly.yhcadsdk.flutter.utils.Const;
+import com.firefly.yhcadsdk.flutter.utils.FlutterPluginUtil;
+import com.firefly.yhcadsdk.flutter.utils.MsgTools;
 import com.firefly.yhcadsdk.sdk.api.YHCAdSdk;
 import com.firefly.yhcadsdk.sdk.base.SdkConfig;
 import com.firefly.yhcadsdk.sdk.base.api.YHCCustomController;

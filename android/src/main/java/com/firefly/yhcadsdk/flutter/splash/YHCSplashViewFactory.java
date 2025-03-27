@@ -1,4 +1,4 @@
-package com.firefly.yhcadsdk.firefly.splash;
+package com.firefly.yhcadsdk.flutter.splash;
 
 import android.content.Context;
 

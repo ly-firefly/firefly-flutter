@@ -1,4 +1,4 @@
-group 'com.firefly.yhcadsdk.firefly'
+group 'com.firefly.yhcadsdk.flutter'
 version '1.0'
 
 buildscript {

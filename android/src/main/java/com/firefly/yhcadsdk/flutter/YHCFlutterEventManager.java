@@ -1,13 +1,13 @@
-package com.firefly.yhcadsdk.firefly;
+package com.firefly.yhcadsdk.flutter;
 
 import android.text.TextUtils;
 
-import com.firefly.yhcadsdk.firefly.init.YHCInitManger;
-import com.firefly.yhcadsdk.firefly.splash.YHCAdSplashManger;
-import com.firefly.yhcadsdk.firefly.utils.Const;
-import com.firefly.yhcadsdk.firefly.utils.FlutterPluginUtil;
-import com.firefly.yhcadsdk.firefly.utils.MsgTools;
-import com.firefly.yhcadsdk.firefly.utils.Utils;
+import com.firefly.yhcadsdk.flutter.init.YHCInitManger;
+import com.firefly.yhcadsdk.flutter.splash.YHCAdSplashManger;
+import com.firefly.yhcadsdk.flutter.utils.Const;
+import com.firefly.yhcadsdk.flutter.utils.FlutterPluginUtil;
+import com.firefly.yhcadsdk.flutter.utils.MsgTools;
+import com.firefly.yhcadsdk.flutter.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;

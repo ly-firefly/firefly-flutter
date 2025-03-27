@@ -1,4 +1,4 @@
-package com.firefly.yhcadsdk.firefly;
+package com.firefly.yhcadsdk.flutter;
 
 import androidx.annotation.NonNull;
 import io.flutter.plugin.common.MethodCall;

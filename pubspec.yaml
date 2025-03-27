@@ -1,6 +1,6 @@
 name: firefly
-description: firefly plugin
-version: 0.0.1
+description: firefly SDK Flutter Plugin for Android
+version: 1.6.0
 homepage:
 
 environment:
@@ -28,7 +28,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.firefly.yhcadsdk.firefly
+        package: com.firefly.yhcadsdk.flutter
         pluginClass: FireflyPlugin
       ios:
         pluginClass: FireflyPlugin

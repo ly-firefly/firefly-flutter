@@ -1,4 +1,4 @@
-package com.firefly.yhcadsdk.firefly.utils;
+package com.firefly.yhcadsdk.flutter.utils;
 
 public class Utils {
     public static boolean checkMethodInArray(String[] methodArray, String methodName) {

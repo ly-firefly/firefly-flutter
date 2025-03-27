@@ -1,12 +1,12 @@
-package com.firefly.yhcadsdk.firefly.splash;
+package com.firefly.yhcadsdk.flutter.splash;
 
 import android.view.View;
 
-import com.firefly.yhcadsdk.firefly.HandleAnyFireflyMethod;
-import com.firefly.yhcadsdk.firefly.YHCFlutterEventManager;
-import com.firefly.yhcadsdk.firefly.utils.Const;
-import com.firefly.yhcadsdk.firefly.utils.FlutterPluginUtil;
-import com.firefly.yhcadsdk.firefly.utils.MsgTools;
+import com.firefly.yhcadsdk.flutter.HandleAnyFireflyMethod;
+import com.firefly.yhcadsdk.flutter.YHCFlutterEventManager;
+import com.firefly.yhcadsdk.flutter.utils.Const;
+import com.firefly.yhcadsdk.flutter.utils.FlutterPluginUtil;
+import com.firefly.yhcadsdk.flutter.utils.MsgTools;
 import com.firefly.yhcadsdk.sdk.api.YHCAdSdk;
 import com.firefly.yhcadsdk.sdk.base.api.ads.AdSlot;
 import com.firefly.yhcadsdk.sdk.base.api.ads.YHCADManager;

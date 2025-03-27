@@ -1,7 +1,7 @@
-package com.firefly.yhcadsdk.firefly;
+package com.firefly.yhcadsdk.flutter;
 
-import com.firefly.yhcadsdk.firefly.splash.YHCSplashViewFactory;
-import com.firefly.yhcadsdk.firefly.utils.Const;
+import com.firefly.yhcadsdk.flutter.splash.YHCSplashViewFactory;
+import com.firefly.yhcadsdk.flutter.utils.Const;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 

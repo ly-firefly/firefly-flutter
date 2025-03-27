@@ -1,6 +1,6 @@
-package com.firefly.yhcadsdk.firefly;
+package com.firefly.yhcadsdk.flutter;
 
-import com.firefly.yhcadsdk.firefly.utils.FlutterPluginUtil;
+import com.firefly.yhcadsdk.flutter.utils.FlutterPluginUtil;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;

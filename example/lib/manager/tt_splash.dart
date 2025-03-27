@@ -23,6 +23,7 @@ class _SplashViewState extends State<SplashView> {
   void dispose() {
     // 销毁当前开屏广告
     _destroy();
+    super.dispose();
   }
 
   _destroy() {
