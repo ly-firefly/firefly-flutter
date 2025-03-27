@@ -34,22 +34,64 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.firefly.yhcadsdk.firefly_example"
+        applicationId "com.zykj.huge.test"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+    signingConfigs {
+        Properties keyProperties = new Properties()
+        keyProperties.load(new FileInputStream(file("${project.rootDir}/buildcfg/keystore.properties")))
+
+        //签名配置
+        mcaddemo {
+            assert keyProperties['yhcaddemo_StoreFile']
+            storeFile file("${project.rootDir}" + keyProperties["yhcaddemo_StoreFile"])
+            keyAlias keyProperties["yhcaddemo_KeyAlias"]
+            storePassword keyProperties["yhcaddemo_KeyPassword"]
+            keyPassword keyProperties["yhcaddemo_StorePassword"]
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.mcaddemo
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.mcaddemo
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 flutter {
     source '../..'
+}
+
+dependencies {
+//    implementation fileTree(dir: 'libs', include: '*.aar')
+    api fileTree(dir: '../../../android/libs', include: ['*.aar', '*.jar'])
+//    implementation 'androidx.annotation:annotation-jvm:1.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+
+    implementation 'io.protostuff:protostuff-core:1.7.4'
+    api 'com.google.protobuf:protobuf-javalite:3.23.0'
+    // 华为的最新版本广告标识服务SDK，参阅 https://developer.huawei.com/consumer/cn/doc/HMSCore-Guides/identifier-service-version-change-history-0000001050066927
+    api("com.huawei.hms:ads-identifier:3.4.62.300")
+    // 荣耀的最新版本广告标识服务SDK，参阅 https://developer.hihonor.com/cn/kitdoc?kitId=11030&navigation=guides&docId=intergrate.md
+    api('com.hihonor.mcs:ads-identifier:1.0.2.301')
 }

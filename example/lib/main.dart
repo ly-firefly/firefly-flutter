@@ -1,8 +1,11 @@
+import 'package:firefly/ff_init.dart';
+import 'package:firefly_example/global_keys.dart';
+import 'package:firefly_example/routers/Routers.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:flutter/services.dart';
-import 'package:firefly/firefly.dart';
+import 'configuration.dart';
+import 'ff_listener_manager.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,45 +19,115 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  bool isInit = false;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    _setListen();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await Firefly.platformVersion ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+  _initFireFlySDK() async {
+    await FFInitManger.initFireFlySDK(
+            appId: Configuration.appId,
+            enableDebug: true,
+            appName: "test",
+            isCanUsePhoneState: true,
+            oaid: "test",
+            isCanUseAndroidId: true)
+        .then((value) => {
+              setState(() {
+                isInit = value;
+              }),
+              Fluttertoast.showToast(msg: value ? "初始化成功" : "初始化失败")
+            });
+  }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
+  _getAppId() async {
+    FFInitManger.getAppId().then((value) {
+      print("appId = ${value}");
+      Fluttertoast.showToast(msg: "appId = ${value}");
     });
+  }
+
+  _getAppName() async {
+    FFInitManger.getAppName().then((value) {
+      print("appName = ${value}");
+      Fluttertoast.showToast(msg: "appName = ${value}");
+    });
+  }
+
+  _getSDKVersion() async {
+    FFInitManger.getSDKVersion().then((value) {
+      print("sdk version = ${value}");
+      Fluttertoast.showToast(msg: "sdk version = ${value}");
+    });
+  }
+
+  _pushSplashRouter(BuildContext ctx) {
+    if(isInit) {
+      Navigator.pushNamed(ctx, "/splashRouter");
+    } else {
+      Fluttertoast.showToast(msg: "未初始化");
+    }
+  }
+
+  _setListen() {
+    // 监听开屏广告相关回调
+    ListenerManager.splashListen(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'FireFly SDK Demo',
+      routes: anyYHCRouters,
+      navigatorKey: navigatorKey,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        appBar: AppBar(title: Text('FireFly SDK Demo')),
+        body: Builder(
+          builder: (ctx) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center, // 垂直居中
+              crossAxisAlignment: CrossAxisAlignment.center, // 水平居中
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _initFireFlySDK();
+                  },
+                  child: Text('初始化'),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    _getAppId();
+                  },
+                  child: Text('getAppId'),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    _getAppName();
+                  },
+                  child: Text('getAppName'),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    _getSDKVersion();
+                  },
+                  child: Text('getSDKVersion'),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    _pushSplashRouter(ctx);
+                  },
+                  child: Text('开屏'),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
