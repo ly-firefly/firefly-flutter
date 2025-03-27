@@ -17,6 +17,7 @@ class _SplashRouterState extends State<SplashRouter> {
   _loadSplash() async {
     YHCSplashManager.loadSplash(adSlotId: Configuration.splashAdSlotId, priceFloor: 1).then((
         value) {
+      print(value ? "获取开屏物料成功" : "获取开屏物料失败");
       Fluttertoast.showToast(
           msg: value ? "获取开屏物料成功" : "获取开屏物料失败");
     });
@@ -24,6 +25,7 @@ class _SplashRouterState extends State<SplashRouter> {
 
   Future<bool> _isAdReady() async {
     bool isAdReady = await YHCSplashManager.isAdReady();
+    print(isAdReady ? "物料已准备完成" : "物料未准备完成");
     Fluttertoast.showToast(
         msg: isAdReady ? "物料已准备完成" : "物料未准备完成");
     return isAdReady;
@@ -38,24 +40,28 @@ class _SplashRouterState extends State<SplashRouter> {
 
   _getAdSlotAd() async {
     YHCSplashManager.getAdSlotAd().then((value) {
-      Fluttertoast.showToast(msg: value);
+      print("代码位Id = ${value}");
+      Fluttertoast.showToast(msg: "代码位Id = ${value}");
     });
   }
 
   _getEcpm() async {
     YHCSplashManager.getEcpm().then((value) {
+      print("ecpm = ${value}");
       Fluttertoast.showToast(msg: "ecpm = ${value}");
     });
   }
 
   _getMaterialType() {
     YHCSplashManager.getMaterialType().then((value) {
+      print("物料类型 = ${value}");
       Fluttertoast.showToast(msg: "物料类型 = ${value}");
     });
   }
 
   _destroy() {
     YHCSplashManager.destroy().then((value) {
+      print(value ? "销毁成功" : "销毁失败");
       Fluttertoast.showToast(msg: value ? "销毁成功" : "销毁失败");
     });
   }

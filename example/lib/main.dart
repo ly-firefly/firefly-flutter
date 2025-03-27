@@ -31,15 +31,16 @@ class _MyAppState extends State<MyApp> {
     await FFInitManger.initFireFlySDK(
             appId: Configuration.appId,
             enableDebug: true,
-            appName: "test",
+            appName: "firefly flutter demo",
             isCanUsePhoneState: true,
             oaid: "test",
             isCanUseAndroidId: true)
-        .then((value) => {
+        .then((value){
               setState(() {
                 isInit = value;
-              }),
-              Fluttertoast.showToast(msg: value ? "初始化成功" : "初始化失败")
+              });
+              print(value ? "初始化成功" : "初始化失败");
+              Fluttertoast.showToast(msg: value ? "初始化成功" : "初始化失败");
             });
   }
 

@@ -18,6 +18,10 @@ class ListenerTool {
         case AdStatus.onAdShowError:
           print("广告加载出错 errorMsg = ${event.errorMsg} , errorCode = ${event.errorCode}");
           Fluttertoast.showToast(msg: "广告加载出错");
+          var currentContext = navigatorKey.currentContext;
+          if(currentContext != null) {
+            Navigator.of(currentContext).pop();
+          }
           break;
         case AdStatus.onAdClicked:
           print("广告被点击");
