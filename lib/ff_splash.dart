@@ -4,7 +4,7 @@ import 'package:firefly/ff_splash_response.dart';
 import 'package:firefly/firefly.dart';
 import 'package:firefly/ff_base_ad.dart';
 
-final YHCSplashManager = YHCSplash();
+final FFSplashManager = YHCSplash();
 
 class YHCSplash implements YHCClientBidding, YHCIBaseAd {
 

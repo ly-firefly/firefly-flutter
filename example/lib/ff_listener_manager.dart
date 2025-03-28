@@ -9,7 +9,7 @@ final ListenerManager = ListenerTool();
 
 class ListenerTool {
   splashListen(BuildContext context) {
-    YHCListenerManager.splashEventHandler.listen((event) {
+    FFListenerManager.splashEventHandler.listen((event) {
       switch (event.splashStatus) {
         case AdStatus.onAdShow:
           print("广告开始展示");

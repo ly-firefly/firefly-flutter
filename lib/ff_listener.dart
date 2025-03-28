@@ -5,7 +5,7 @@ import 'package:firefly/firefly.dart';
 import 'package:flutter/services.dart';
 
 
-final YHCListenerManager = YHCListener();
+final FFListenerManager = YHCListener();
 
 class YHCListener {
 
