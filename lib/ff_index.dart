@@ -1,4 +1,5 @@
 export 'package:firefly/ff_init.dart';
+export 'package:firefly/ff_sdk_const.dart';
 
 export 'package:firefly/ff_splash.dart';
 

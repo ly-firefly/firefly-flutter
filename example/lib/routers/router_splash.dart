@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firefly/ff_splash.dart';
 import 'package:flutter/services.dart';
+import 'package:firefly/ff_sdk_const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SplashRouter extends StatefulWidget {
@@ -75,10 +76,10 @@ class _SplashRouterState extends State<SplashRouter> {
   _win() {
     int price = 12;
     Map<String, dynamic> map = {
-      "adn": 1,
-      "ad_t": 1,
-      "ad_time": DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      "bid_t": 1,
+      BiddingNoticeKey.KEY_ADN: 1,
+      BiddingNoticeKey.KEY_AD_MATERIAL: 1,
+      BiddingNoticeKey.KEY_AD_TIME: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      BiddingNoticeKey.KEY_BID_TYPE: 1,
     };
     YHCSplashManager.win(price: price, map: map);
   }
@@ -86,13 +87,13 @@ class _SplashRouterState extends State<SplashRouter> {
   _loss() {
     int price = 12;
     Map<String, dynamic> map = {
-      "adn": 1,
-      "ad_t": 1,
-      "ad_time": DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      "bid_t": 1,
-      "reason": "竞价失败",
-      "is_s": 0,
-      "is_c": 1,
+      BiddingNoticeKey.KEY_ADN: 1,
+      BiddingNoticeKey.KEY_AD_MATERIAL: 1,
+      BiddingNoticeKey.KEY_AD_TIME: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      BiddingNoticeKey.KEY_BID_TYPE: 1,
+      BiddingNoticeKey.KEY_LOSS_REASON: "竞价失败",
+      BiddingNoticeKey.KEY_IS_SHOW: 0,
+      BiddingNoticeKey.KEY_IS_CLICK: 1,
     };
     YHCSplashManager.loss(price: price, map: map);
   }
@@ -135,7 +136,7 @@ class _SplashRouterState extends State<SplashRouter> {
                 controller: _controllerSlotId,
                 enableInteractiveSelection: true,
                 decoration: InputDecoration(
-                    labelText: Configuration.appId,
+                    labelText: Configuration.splashAdSlotId,
                     border: OutlineInputBorder(),
                     hintText: "输入代码位"
                 ),
