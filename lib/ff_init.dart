@@ -11,7 +11,7 @@ class FFInit {
    */
   Future<bool> initFireFlySDK({
     required String appId,
-    required bool enableDebug,
+    bool? enableDebug = false,
     String? appName,
     bool isCanUsePhoneState = true,
     String? oaid,

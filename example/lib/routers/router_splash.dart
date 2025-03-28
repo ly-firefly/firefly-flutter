@@ -41,10 +41,7 @@ class _SplashRouterState extends State<SplashRouter> {
   }
 
   _showSplash() async {
-    var isAdReady = await _isAdReady();
-    if(isAdReady) {
-      Navigator.pushNamed(context, "/splashView");
-    }
+    Navigator.pushNamed(context, "/splashView");
   }
 
   _getAdSlotAd() async {
@@ -82,9 +79,6 @@ class _SplashRouterState extends State<SplashRouter> {
       "ad_t": 1,
       "ad_time": DateTime.now().millisecondsSinceEpoch ~/ 1000,
       "bid_t": 1,
-      "reason": "竞价成功",
-      "is_s": 1,
-      "is_c": 1,
     };
     YHCSplashManager.win(price: price, map: map);
   }

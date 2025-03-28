@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../configuration.dart';
+
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -13,10 +15,12 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  bool flag = false;
 
   @override
   void initState() {
     super.initState();
+    _loadSplash();
   }
 
   @override
@@ -25,15 +29,32 @@ class _SplashViewState extends State<SplashView> {
     _destroy();
     super.dispose();
   }
-
+  // 销毁开屏
   _destroy() {
     YHCSplashManager.destroy().then((value) {
       Fluttertoast.showToast(msg: value ? "销毁成功" : "销毁失败");
     });
   }
-
+  // 请求开屏物料
+  _loadSplash() async {
+    await YHCSplashManager.loadSplash(adSlotId: Configuration.splashAdSlotId);
+    _isAdReady();
+  }
+  // 是否准备完成
+  _isAdReady() async {
+    YHCSplashManager.isAdReady().then((value) {
+      setState(() {
+        flag = value;
+      });
+    });
+  }
+  // 展示开屏View
   _getSplashView() {
-    return PlatformSplashWidget();
+    if(flag) {
+      return PlatformSplashWidget();
+    } else {
+      return null;
+    }
   }
 
   @override
