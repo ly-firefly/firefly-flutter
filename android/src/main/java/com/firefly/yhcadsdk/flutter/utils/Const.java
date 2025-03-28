@@ -26,6 +26,8 @@ public class Const {
         public static final String CALL_BACK_NAME = "callbackName";
         public static final String ERROR_MSG = "errorMsg";
         public static final String ERROR_CODE = "errorCode";
+        public static final String LOAD_RESULT_CODE = "result_code";
+        public static final String LOAD_RESULT_MSG = "result_msg";
 
     }
 
@@ -42,5 +44,5 @@ public class Const {
     }
 
     public static String[] initMethodNames = {"initFireFlySDK", "getAppId", "getSDKVersion", "getAppName"};
-    public static String[] splashMethodNames = {"loadSplash", "splashReady", "getSplashAdSlotAd", "getSplashEcpm", "getSplashMaterialType", "splashDestroy", "splashWin", "splashLoss"};
+    public static String[] splashMethodNames = {"loadSplash", "splashReady", "getSplashAdSlotAd", "getSplashEcpm", "getSplashMaterialType", "splashDestroy", "splashWin", "splashLoss", "getSplashRequestId"};
 }

@@ -27,9 +27,11 @@ class _SplashRouterState extends State<SplashRouter> {
     }
     YHCSplashManager.loadSplash(adSlotId: slotId, priceFloor: priceFloorH).then((
         value) {
-      print(value ? "获取开屏物料成功" : "获取开屏物料失败");
+      var resultCode = value.resultCode;
+      var resultMsg = value.resultMsg;
+      print(resultCode == 0 ? "获取开屏物料成功" : "获取开屏物料失败 resultCode = ${resultCode}, resultMsg = ${resultMsg}");
       Fluttertoast.showToast(
-          msg: value ? "获取开屏物料成功" : "获取开屏物料失败");
+          msg: resultCode == 0 ? "获取开屏物料成功" : "获取开屏物料失败 resultCode = ${resultCode}, resultMsg = ${resultMsg}");
     });
   }
 
@@ -49,6 +51,13 @@ class _SplashRouterState extends State<SplashRouter> {
     YHCSplashManager.getAdSlotAd().then((value) {
       print("代码位Id = ${value}");
       Fluttertoast.showToast(msg: "代码位Id = ${value}");
+    });
+  }
+
+  _getRequestId() async {
+    YHCSplashManager.getRequestId().then((value) {
+      print("RequestId = ${value}");
+      Fluttertoast.showToast(msg: "RequestId = ${value}");
     });
   }
 
@@ -181,6 +190,13 @@ class _SplashRouterState extends State<SplashRouter> {
                   _getAdSlotAd();
                 },
                 child: Text('获取代码位'),
+              ),
+              SizedBox(height: 5),
+              ElevatedButton(
+                onPressed: () {
+                  _getRequestId();
+                },
+                child: Text('获取requestId'),
               ),
               SizedBox(height: 5),
               ElevatedButton(

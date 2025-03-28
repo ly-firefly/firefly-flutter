@@ -15,6 +15,7 @@ import com.firefly.yhcadsdk.sdk.base.api.ads.YHCAdNative;
 import com.firefly.yhcadsdk.sdk.base.api.ads.YHCSplashAd;
 import com.firefly.yhcadsdk.sdk.base.api.core.SdkConst;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,9 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
             case "loadSplash":
                 String adSlotId = methodCall.argument(Const.Splash.AD_SLOT_ID);
                 long priceFloor = ((Number) methodCall.argument(Const.Splash.PRICE_FLOOR)).longValue(); //
+                MsgTools.i(String.format("adSlotId = %s, priceFloor = %d", adSlotId, priceFloor));
                 YHCAdNative adNative = getAdNative();
+                Map<String, Object> resultMap = new HashMap<>();
                 if (adNative != null) {
                     AdSlot adSlot = new AdSlot.Builder()
                             .setAdSlotId(adSlotId)
@@ -56,17 +59,22 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
                         @Override
                         public void onSplashLoadSuccess(YHCSplashAd yhcSplashAd) {
                             mYHCSplashAd = yhcSplashAd;
-                            result.success(true);
+                            resultMap.put(Const.CallbackKey.LOAD_RESULT_CODE, 0);
+                            resultMap.put(Const.CallbackKey.LOAD_RESULT_MSG, "");
+                            result.success(resultMap);
                         }
 
                         @Override
                         public void onSplashLoadFail(YHCAdError yhcAdError) {
-                            result.success(false);
+                            resultMap.put(Const.CallbackKey.LOAD_RESULT_CODE, yhcAdError.getCode());
+                            resultMap.put(Const.CallbackKey.LOAD_RESULT_MSG, yhcAdError.getMsg());
+                            result.success(resultMap);
                         }
                     });
-                    MsgTools.i(String.format("adSlotId = %s, priceFloor = %d", adSlotId, priceFloor));
                 } else {
-                    result.success(false);
+                    resultMap.put(Const.CallbackKey.LOAD_RESULT_CODE, 20001);
+                    resultMap.put(Const.CallbackKey.LOAD_RESULT_MSG, "SDK未初始化");
+                    result.success(resultMap);
                 }
                 break;
             case "splashReady":
@@ -129,6 +137,14 @@ public class YHCAdSplashManger implements HandleAnyFireflyMethod {
                     Map<String, Object> map = methodCall.argument(Const.Splash.EXTRA);
                     mYHCSplashAd.loss(price, map);
                     MsgTools.i("splashLoss = " + map(map));
+                }
+                break;
+                case "getSplashRequestId":
+                if (mYHCSplashAd != null) {
+                    String requestId = mYHCSplashAd.getRequestId();
+                    result.success(requestId);
+                } else {
+                    result.success("");
                 }
                 break;
         }

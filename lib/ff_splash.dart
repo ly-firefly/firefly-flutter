@@ -1,5 +1,6 @@
 
 import 'package:firefly/ff_client_bidding.dart';
+import 'package:firefly/ff_splash_response.dart';
 import 'package:firefly/firefly.dart';
 import 'package:firefly/ff_base_ad.dart';
 
@@ -7,7 +8,7 @@ final YHCSplashManager = YHCSplash();
 
 class YHCSplash implements YHCClientBidding, YHCIBaseAd {
 
-  Future<bool> loadSplash({
+  Future<YHCLoadSplashResponse> loadSplash({
     required String adSlotId,
     int? priceFloor
   }) async {
@@ -15,7 +16,9 @@ class YHCSplash implements YHCClientBidding, YHCIBaseAd {
       "adSlotId": adSlotId,
       "priceFloor": (priceFloor != null) ? priceFloor : 0,
     };
-    return await Firefly.channel.invokeMethod("loadSplash", args);
+    Map result = await Firefly.channel.invokeMethod("loadSplash", args);
+    var yhcLoadSplashResponse = YHCLoadSplashResponse.withMap(result);
+    return yhcLoadSplashResponse;
   }
 
   @override
@@ -36,6 +39,11 @@ class YHCSplash implements YHCClientBidding, YHCIBaseAd {
   @override
   Future<int> getEcpm() async {
     return await Firefly.channel.invokeMethod("getSplashEcpm", {});
+  }
+
+  @override
+  Future<String> getRequestId() async {
+    return await Firefly.channel.invokeMethod("getSplashRequestId", {});
   }
 
   @override

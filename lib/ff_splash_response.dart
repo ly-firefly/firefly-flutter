@@ -33,3 +33,15 @@ class YHCSplashResponse {
     return YHCSplashResponse(callbackName, errorCode, errorMsg);
   }
 }
+
+class YHCLoadSplashResponse {
+  final String resultMsg;
+  final int resultCode;
+  YHCLoadSplashResponse(this.resultCode, this.resultMsg);
+
+  factory YHCLoadSplashResponse.withMap(Map map) {
+    var errorMsg = map["result_msg"];
+    var errorCode = map["result_code"];
+    return YHCLoadSplashResponse(errorCode, errorMsg);
+  }
+}
